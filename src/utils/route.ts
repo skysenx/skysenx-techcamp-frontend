@@ -1,0 +1,5 @@
+export const dashboardRoute = "/";
+export const attendanceRoute = "/attendance";
+export const assessmentRoute = "/assessment";
+export const studentRoute = "/";
+// export const studentRoute = "/student";
