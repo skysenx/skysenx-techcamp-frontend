@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${montserrat.className} h-screen bg-white max-lg:hidden`}
+        className={`${montserrat.className} h-screen bg-white max-lghidden`}
       >
         <main className="h-full">{children}</main>
         <Toaster position="top-right" richColors theme="light" />

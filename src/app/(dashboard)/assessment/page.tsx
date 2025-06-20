@@ -102,7 +102,7 @@ export default function Page() {
   };
 
   return (
-    <div className="mt-[29px] border rounded-[12px] border-[#e9eaeb] bg-white shadow">
+    <div className="mt-[29px] border rounded-[12px] border-[#e9eaeb] bgwhite shadow">
       {/* Header */}
       <div className="flex justify-between items-center px-6 py-5 border-b border-[#e9eaeb]">
         <div className="flex items-center gap-3">
@@ -111,28 +111,20 @@ export default function Page() {
             {studentsData.length} students
           </div>
         </div>
-        {/* <div>
-          <Button
-            size="sm"
-            onClick={handleAddStudent}
-            href={createstudentRoute}
-          >
-            Add Student
-          </Button>
-        </div> */}
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
-        <table className="min-w-full">
+      <div className="">
+        <table className="w-full min-w-fit">
           <thead>
             <tr className="text-sm text-[#535862] bg-[#FAFAFA]">
               <th className="py-4 px-6 text-left font-medium">Name</th>
-              <th className="py-4 px-6 text-left font-medium">Status</th>
-              <th className="py-4 px-6 text-left font-medium">Class</th>
-              <th className="py-4 px-6 text-left font-medium">
-                Parents Cell No.
-              </th>
+              <th className="py-4 px-6 text-center font-medium">Status</th>
+              <th className="py-4 px-6 text-center font-medium">Behaviour</th>
+              <th className="py-4 px-6 text-center font-medium">Attentive</th>
+              <th className="py-4 px-6 text-center font-medium">Punctuality</th>
+              <th className="py-4 px-6 text-center font-medium">Remark</th>
+              <th className="py-4 px-6 text-center font-medium">Class</th>
               <th className="py-4 px-6 text-center font-medium">Actions</th>
             </tr>
           </thead>
@@ -154,16 +146,26 @@ export default function Page() {
                   </div>
                   <div className="whitespace-nowrap">{student.name}</div>
                 </td>
-                <td className="py-4 px-6">
+                <td className="py-4 px-6 text-center">
                   <StatusBadge status={student.status} />
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap">
-                  {student.class}
+                <td className="py-4 px-6 text-center font-medium whitespace-nowrap">
+                  Good
                 </td>
-                <td className="py-4 px-6 font-mono whitespace-nowrap">
-                  {student.parentPhone}
+                <td className="py-4 px-6 text-center whitespace-nowrap">
+                  Very Good
                 </td>
-                <td className="py-4 px-6">
+                <td className="py-4 px-6 text-center whitespace-nowrap">
+                  Very Good
+                </td>
+                <td className="py-4 px-6 text-center whitespace-nowrap">
+                  Design
+                </td>
+                <td className="py-4 px-6 text-center max-w-10 truncate whitespace-nowrap">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Sapiente, itaque.
+                </td>
+                <td className="py-4 px-6 text-center">
                   <div className="flex items-center justify-center gap-2">
                     <button
                       onClick={() => handleAssessStudent(student.id)}

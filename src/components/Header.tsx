@@ -32,7 +32,7 @@ export default function Header() {
           </span>
           <IoChevronDown className="text-[24px]" />
         </div> */}
-        <Menu __demoMode>
+        <Menu>
           <MenuButton className="focus:outline-none">
             <div className="flex items-center gap-4">
               <PiUserCircleThin className="text-[34px]" />

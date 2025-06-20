@@ -1,11 +1,11 @@
 "use client";
 import React, { useState } from "react";
-import Button from "../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 // import { HiOutlinePencilAlt, HiOutlineTrash } from "react-icons/hi";
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
-import Pagination from "../../components/Pagination";
-import { createstudentRoute } from "../../utils/route";
+import Pagination from "../../../components/Pagination";
+import { createstudentRoute } from "../../../utils/route";
 
 // Sample data - replace with your actual data
 const studentsData = [

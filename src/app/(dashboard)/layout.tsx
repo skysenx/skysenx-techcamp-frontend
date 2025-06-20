@@ -8,7 +8,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="bg-re-400 h-screen flex overflow-hidden">
+    <div className="bg-re-400 h-screen flex overflow-y-hidden">
       <SideNav />
 
       <div className="flex-2/3 h-screen relative">

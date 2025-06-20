@@ -42,7 +42,7 @@ export default function StudentForm() {
   });
 
   return (
-    <div className="border border-[#E9EAEB] w-full max-w-[610px] rounded-[12px] py-10 px-[60px]">
+    <div className="border border-[#E9EAEB] w-[600px] rounded-[12px] py-10 px-[60px]">
       <form onSubmit={formik.handleSubmit} className="flex flex-col gap-4">
         <h3 className="font-medium text-lg  mt-4 text-center">
           Student Details

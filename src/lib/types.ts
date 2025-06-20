@@ -19,4 +19,9 @@ export interface IStudent {
 
 export interface IAssesssment {
 date:string
+remark:string
+punctuality:string
+attentive:string
+behaviour:string
+assignment:string
 }
