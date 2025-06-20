@@ -8,11 +8,9 @@ import { toast } from "sonner";
 import Button from "../../../components/ui/Button";
 import { dashboardRoute } from "../../../utils/route";
 import { useRouter } from "next/navigation";
+import { ILogin } from "../../../lib/types";
 
-interface ILogin {
-  email: string;
-  password: string;
-}
+
 
 export default function Page() {
   const router = useRouter();

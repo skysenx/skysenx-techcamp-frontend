@@ -36,7 +36,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const themeMap = {
     primary: `text-white ${disabled ? "bg-primary/60" : "bg-primary"}`,
-    secondary: `text-primary bg-white`,
+    secondary: `text-white ${disabled ? "bg-secondary/60" : "bg-secondary"}`,
   };
 
   const sizeMap = {

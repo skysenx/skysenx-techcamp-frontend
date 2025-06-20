@@ -27,3 +27,6 @@ body {
 .input-class {
   @apply w-full border  px-5  py-4 h-[49px] rounded-[20px] placeholder:text-[#7D7D7D] focus:border-primary   focus:outline-none caret-primary  duration-150;
 }
+.select-class {
+  @apply w-full border  px-5  py-4 h-[49px] rounded-[20px] placeholder:text-[#7D7D7D] focus:border-primary   focus:outline-none caret-primary  duration-150;
+}

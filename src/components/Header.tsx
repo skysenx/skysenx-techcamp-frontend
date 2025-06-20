@@ -1,6 +1,7 @@
 "use client";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import React from "react";
-import { RiSearchLine } from "react-icons/ri";
+import { RiLogoutBoxLine, RiSearchLine } from "react-icons/ri";
 import { Input } from "@headlessui/react";
 // import { FaRegCircleUser } from "react-icons/fa6";
 // import { HiOutlineUserCircle } from "react-icons/hi";
@@ -24,13 +25,37 @@ export default function Header() {
             className="w-full border border-[#E9EAEB]  py-3 pl-[63px] pr-4 h-[48px] placeholder:text-[#535862] focus:border-primary   focus:outline-none caret-primary  duration-150 rounded-[12px]"
           />
         </div>
-        <div className="flex items-center gap-4">
+        {/* <div className="flex items-center gap-4">
           <PiUserCircleThin className="text-[34px]" />
           <span className="text-sm inline-block whitespace-nowrap">
             Tubo Layefa
           </span>
           <IoChevronDown className="text-[24px]" />
-        </div>
+        </div> */}
+        <Menu __demoMode>
+          <MenuButton className="focus:outline-none">
+            <div className="flex items-center gap-4">
+              <PiUserCircleThin className="text-[34px]" />
+              <span className="text-sm inline-block whitespace-nowrap">
+                Tubo Layefa
+              </span>
+              <IoChevronDown className="text-[18px]" />
+            </div>
+          </MenuButton>
+
+          <MenuItems
+            transition
+            anchor="bottom start"
+            className="w-40 origin-top-right  bg-white  font-medium shadow py-4  transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
+          >
+            <MenuItem>
+              <button className="group flex w-full items-center gap-2  px-3 py-1.5 cursor-pointer text-secondary data-focus:bg-secondary data-focus:text-white">
+                <RiLogoutBoxLine />
+                <span>Sign out</span>
+              </button>
+            </MenuItem>
+          </MenuItems>
+        </Menu>
       </div>
       <div className="myContainer">
         <hr className="text-[#EDECEC] mt-[14px]" />

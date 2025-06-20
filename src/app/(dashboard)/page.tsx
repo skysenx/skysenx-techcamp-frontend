@@ -5,6 +5,7 @@ import Button from "../../components/ui/Button";
 import { FiEdit2 } from "react-icons/fi";
 import Image from "next/image";
 import Pagination from "../../components/Pagination";
+import { createstudentRoute } from "../../utils/route";
 
 // Sample data - replace with your actual data
 const studentsData = [
@@ -108,7 +109,11 @@ export default function Page() {
           </div>
         </div>
         <div>
-          <Button size="sm" onClick={handleAddStudent} className="">
+          <Button
+            size="sm"
+            onClick={handleAddStudent}
+            href={createstudentRoute}
+          >
             Add Student
           </Button>
         </div>

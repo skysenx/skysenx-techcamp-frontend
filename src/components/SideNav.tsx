@@ -3,16 +3,8 @@
 import React from "react";
 import Logo from "./ui/Logo";
 import Link from "next/link";
-// import { AiOutlineDashboard } from "react-icons/ai";
-import {
-  assessmentRoute,
-  attendanceRoute,
-  //   dashboardRoute,
-  studentRoute,
-} from "../utils/route";
+import { assessmentRoute, attendanceRoute, studentRoute } from "../utils/route";
 import { usePathname } from "next/navigation";
-// import { TbUsersGroup } from "react-icons/tb";
-// import { PiUsersThreeBold } from "react-icons/pi";
 import { MdAssessment, MdOutlinePeopleOutline } from "react-icons/md";
 import { GrGroup } from "react-icons/gr";
 
@@ -80,7 +72,11 @@ const NavLinks: React.FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
             <NavLink
               key={item.name}
               item={item}
-              isActive={pathname === item.href}
+              isActive={
+                pathname === "/"
+                  ? pathname.startsWith(item.href)
+                  : pathname === item.href
+              }
               onClick={onLinkClick}
             />
           ))}
