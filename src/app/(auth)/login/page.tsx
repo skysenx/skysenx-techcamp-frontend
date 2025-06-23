@@ -1,36 +1,41 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Logo from "../../../components/ui/Logo";
 import InputField from "../../../components/ui/InputField";
 import { useFormik } from "formik";
 import { signInValidation } from "../../../lib/validations";
-import { toast } from "sonner";
+// import { toast } from "sonner";
 import Button from "../../../components/ui/Button";
-import { dashboardRoute } from "../../../utils/route";
-import { useRouter } from "next/navigation";
+// import { dashboardRoute } from "../../../utils/route";
+// import { useRouter } from "next/navigation";
 import { ILogin } from "../../../lib/types";
-
-
+import { useLogin } from "../../../hooks/useUser";
 
 export default function Page() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
-  console.log(loading);
+  // const router = useRouter();
+  // const [loading, setLoading] = useState(false);
+  const { mutate, isPending } = useLogin();
+
+  // console.log(loading);
   const formik = useFormik<ILogin>({
     initialValues: {
       email: "",
       password: "",
+      otp: "",
     },
     validationSchema: signInValidation,
     onSubmit: (values) => {
-      setLoading(true);
-      console.log(values);
-      router.push(dashboardRoute);
+      // setLoading(true);
+      // console.log(values);
 
-      setTimeout(() => {
-        setLoading(false);
-        toast.success("Login Successful");
-      }, 1000);
+      mutate(values);
+
+      // router.push(dashboardRoute);
+
+      // setTimeout(() => {
+      //   setLoading(false);
+      //   toast.success("Login Successful");
+      // }, 1000);
     },
   });
 
@@ -68,12 +73,22 @@ export default function Page() {
                 formik.touched.password ? formik.errors.password || null : null
               }
             />
+            <InputField
+              name="otp"
+              label="OTP"
+              placeholder="Enter OTP"
+              type="otp"
+              value={formik.values.otp}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              error={formik.touched.otp ? formik.errors.otp || null : null}
+            />
             <Button
               size="lg"
               type="submit"
               className="mx-auto"
-              loading={loading}
-              disabled={loading || !(formik.isValid && formik.dirty)}
+              loading={isPending}
+              disabled={isPending || !(formik.isValid && formik.dirty)}
             >
               Login
             </Button>

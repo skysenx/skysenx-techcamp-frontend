@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Montserrat } from "next/font/google";
+import ReactQueryProvider from "../providers/ReactQueryProvider";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -25,8 +26,10 @@ export default function RootLayout({
       <body
         className={`${montserrat.className} h-screen bg-white max-lghidden`}
       >
-        <main className="h-full">{children}</main>
-        <Toaster position="top-right" richColors theme="light" />
+        <ReactQueryProvider>
+          <main className="h-full">{children}</main>
+          <Toaster position="top-right" richColors theme="light" />
+        </ReactQueryProvider>
       </body>
     </html>
   );

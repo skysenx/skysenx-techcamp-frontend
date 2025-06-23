@@ -5,6 +5,7 @@ export const signInValidation = Yup.object().shape({
     .email("Invalid email address")
     .required("Email is required"),
   password: Yup.string().required("Password is required"),
+  otp: Yup.string().required("OTP is required"),
 });
 
 export const studentValidation = Yup.object({

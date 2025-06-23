@@ -1,6 +1,7 @@
 export interface ILogin {
   email: string;
   password: string;
+  otp: string;
 }
 
 export interface IStudent {
@@ -18,10 +19,36 @@ export interface IStudent {
 }
 
 export interface IAssesssment {
-date:string
-remark:string
-punctuality:string
-attentive:string
-behaviour:string
-assignment:string
+  date: string;
+  remark: string;
+  punctuality: string;
+  attentive: string;
+  behaviour: string;
+  assignment: string;
+}
+
+export interface IUserLoginResponse {
+  status: {
+    code: number;
+    message: string;
+  };
+  data: {
+    authentication: {
+      profile: {
+        firstname: string;
+        lastname: string;
+        email: string;
+        phone: string;
+      };
+      permissions: string[];
+      authorizationToken: string;
+      refreshToken: string;
+    };
+  };
+}
+export interface IErrorResponse {
+  status: {
+    code: number;
+    message: string;
+  };
 }
