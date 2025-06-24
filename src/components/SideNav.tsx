@@ -3,7 +3,11 @@
 import React from "react";
 import Logo from "./ui/Logo";
 import Link from "next/link";
-import { assessmentRoute, attendanceRoute, studentRoute } from "../utils/route";
+import {
+  assessmentRoute,
+  attendanceRoute,
+  studentsRoute,
+} from "../utils/route";
 import { usePathname } from "next/navigation";
 import { MdAssessment, MdOutlinePeopleOutline } from "react-icons/md";
 import { GrGroup } from "react-icons/gr";
@@ -17,7 +21,7 @@ const navigationItems = [
   //   },
   {
     name: "Students",
-    href: studentRoute, // example second nav item
+    href: studentsRoute, // example second nav item
     icon: MdOutlinePeopleOutline, // you can replace with another icon
   },
   {

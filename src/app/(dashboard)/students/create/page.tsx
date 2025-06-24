@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import GoBack from "../../../../components/ui/GoBack";
-import StudentForm from "../../../../components/forms/StudentForm";
+import StudentForm from "../../../../components/forms/CreateStudentForm";
 
 export default function Page() {
   return (

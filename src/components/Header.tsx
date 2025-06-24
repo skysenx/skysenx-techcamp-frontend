@@ -7,8 +7,29 @@ import { Input } from "@headlessui/react";
 // import { HiOutlineUserCircle } from "react-icons/hi";
 import { PiUserCircleThin } from "react-icons/pi";
 import { IoChevronDown } from "react-icons/io5";
+import { userAuth } from "../stores/variables";
+import { loginRoute } from "../utils/route";
+import { useRouter } from "next/navigation";
 
 export default function Header() {
+  const { setCredentials, credentials } = userAuth();
+  const router = useRouter();
+
+  function handleLogOut() {
+    sessionStorage.setItem("accessToken", "");
+    sessionStorage.setItem("refreshToken", "");
+    sessionStorage.setItem("user", "");
+    setCredentials("", "", {
+      firstname: "",
+      lastname: "",
+      email: "",
+      password: "",
+      phone: "",
+      roles: [],
+    });
+    router.push(loginRoute);
+  }
+
   return (
     <header className="absolute top-0 left-0 right-0 pt-[35px]">
       <div className="myContainer w-full flex justify-between items-center gap-20">
@@ -37,7 +58,7 @@ export default function Header() {
             <div className="flex items-center gap-4">
               <PiUserCircleThin className="text-[34px]" />
               <span className="text-sm inline-block whitespace-nowrap">
-                Tubo Layefa
+                {credentials?.user.firstname || ""}
               </span>
               <IoChevronDown className="text-[18px]" />
             </div>
@@ -49,7 +70,10 @@ export default function Header() {
             className="w-40 origin-top-right  bg-white  font-medium shadow py-4  transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0"
           >
             <MenuItem>
-              <button className="group flex w-full items-center gap-2  px-3 py-1.5 cursor-pointer text-secondary data-focus:bg-secondary data-focus:text-white">
+              <button
+                onClick={handleLogOut}
+                className="group flex w-full items-center gap-2  px-3 py-1.5 cursor-pointer text-secondary data-focus:bg-secondary data-focus:text-white"
+              >
                 <RiLogoutBoxLine />
                 <span>Sign out</span>
               </button>

@@ -1,43 +1,56 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import InputField from "../ui/InputField";
 import { useFormik } from "formik";
 import Button from "../ui/Button";
-import { IStudent } from "../../lib/types";
+import { ICohort, IProgram, IStudent } from "../../lib/types";
 import { studentValidation } from "../../lib/validations";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
-import { studentRoute } from "../../utils/route";
 import SelectField from "../ui/SelectField";
-import { courses } from "../../utils/contents";
+import { useFindPrograms } from "../../hooks/useProgram";
+import { useFindCohorts } from "../../hooks/useCohort";
+import { useCreateStudent } from "../../hooks/useStudents";
 
 export default function StudentForm() {
-  const router = useRouter();
-  const [loading, setLoading] = useState(false);
+  const { data: programsData } = useFindPrograms();
+  const { data: cohortsData } = useFindCohorts();
+  const programs = programsData?.data?.programs?.map((p: IProgram) => ({
+    label: p.name,
+    value: p.id,
+  }));
+  const cohorts = cohortsData?.data?.cohorts?.map((p: ICohort) => ({
+    label: p.name,
+    value: p.id,
+  }));
+  const { mutate, isPending } = useCreateStudent();
+
+  // console.log(programs);
+  // console.log(cohorts);
+
   const formik = useFormik<IStudent>({
     initialValues: {
       fullName: "",
-      age: "",
+      age: 0,
       gender: "",
       address: "",
       city: "",
-      program: "",
-      previousTraining: "",
+      state: "",
+      country: "",
+      program: {
+        id: "",
+      },
+      cohort: {
+        id: "",
+      },
       guardianName: "",
-      guardianContact: "",
+      guardianPhone: "",
       guardianEmail: "",
+      guardianAddress: "",
       guardianRelationship: "",
     },
     validationSchema: studentValidation,
     onSubmit: (values) => {
-      setLoading(true);
-      console.log(values);
-      router.push(studentRoute);
-
-      setTimeout(() => {
-        setLoading(false);
-        toast.success("Created Successful");
-      }, 1000);
+      console.log("valuesss", values);
+      mutate(values);
     },
   });
 
@@ -51,7 +64,7 @@ export default function StudentForm() {
           name="fullName"
           label="Full Name"
           placeholder="Enter full name"
-          value={formik.values.fullName}
+          value={formik.values.fullName || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -66,7 +79,7 @@ export default function StudentForm() {
             min={0}
             className="input-class flex-1"
             placeholder="Enter age"
-            value={formik.values.age}
+            value={formik.values.age || ""}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             error={formik.touched.age ? formik.errors.age || null : null}
@@ -78,14 +91,14 @@ export default function StudentForm() {
               options={[
                 {
                   label: "Male",
-                  value: "male",
+                  value: "M",
                 },
                 {
                   label: "Female",
-                  value: "female",
+                  value: "F",
                 },
               ]}
-              value={formik.values.gender}
+              value={formik.values.gender || ""}
               onChange={(val) => formik.setFieldValue("gender", val)}
               onBlur={() => formik.setFieldTouched("gender", true)}
               error={
@@ -99,7 +112,7 @@ export default function StudentForm() {
           name="address"
           label="Address"
           placeholder="Enter address"
-          value={formik.values.address}
+          value={formik.values.address || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.address ? formik.errors.address || null : null}
@@ -108,32 +121,70 @@ export default function StudentForm() {
           name="city"
           label="City"
           placeholder="Enter city"
-          value={formik.values.city}
+          value={formik.values.city || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={formik.touched.city ? formik.errors.city || null : null}
+        />
+        <InputField
+          name="state"
+          label="State"
+          placeholder="Enter state"
+          value={formik.values.state || ""}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.state ? formik.errors.state || null : null}
+        />
+        <InputField
+          name="country"
+          label="Country"
+          placeholder="Enter country"
+          value={formik.values.country || ""}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={formik.touched.country ? formik.errors.country || null : null}
+        />
+        <InputField
+          name="lastSchool"
+          label="Last School"
+          placeholder="Enter last school"
+          value={formik.values.lastSchool || ""}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.lastSchool ? formik.errors.lastSchool || null : null
+          }
         />
 
         <h3 className="font-medium text-lg  mt-4 text-center">Course Info</h3>
         <SelectField
           name="program"
           label="Program"
-          options={courses}
-          value={formik.values.program}
-          onChange={(val) => formik.setFieldValue("program", val)}
+          options={programs}
+          value={formik.values.program?.id || ""}
+          onChange={(val) => formik.setFieldValue("program", { id: val })}
           onBlur={() => formik.setFieldTouched("program", true)}
-          error={formik.touched.program ? formik.errors.program || null : null}
-        />
-        <InputField
-          name="previousTraining"
-          label="Previous Training"
-          placeholder="E.g. Coding Bootcamp"
-          value={formik.values.previousTraining}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
           error={
-            formik.touched.previousTraining
-              ? formik.errors.previousTraining || null
+            formik.touched.program
+              ? typeof formik.errors.program === "object"
+                ? (formik.errors.program as { id?: string })?.id || null
+                : formik.errors.program || null
+              : null
+          }
+        />
+
+        <SelectField
+          name="cohort"
+          label="Cohort"
+          options={cohorts}
+          value={formik.values.cohort?.id || ""}
+          onChange={(val) => formik.setFieldValue("cohort", { id: val })}
+          onBlur={() => formik.setFieldTouched("cohort", true)}
+          error={
+            formik.touched.cohort
+              ? typeof formik.errors.cohort === "object"
+                ? (formik.errors.cohort as ICohort)?.id || null
+                : formik.errors.cohort || null
               : null
           }
         />
@@ -144,7 +195,7 @@ export default function StudentForm() {
           name="guardianName"
           label="Guardian Name"
           placeholder="Enter guardian's name"
-          value={formik.values.guardianName}
+          value={formik.values.guardianName || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -154,15 +205,16 @@ export default function StudentForm() {
           }
         />
         <InputField
-          name="guardianContact"
+          name="guardianPhone"
           label="Guardian Contact"
           placeholder="Phone number"
-          value={formik.values.guardianContact}
+          type="tel"
+          value={formik.values.guardianPhone || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
-            formik.touched.guardianContact
-              ? formik.errors.guardianContact || null
+            formik.touched.guardianPhone
+              ? formik.errors.guardianPhone || null
               : null
           }
         />
@@ -170,7 +222,7 @@ export default function StudentForm() {
           name="guardianEmail"
           label="Guardian Email"
           placeholder="Email address"
-          value={formik.values.guardianEmail}
+          value={formik.values.guardianEmail || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -183,7 +235,7 @@ export default function StudentForm() {
           name="guardianRelationship"
           label="Relationship"
           placeholder="e.g. Father, Sister"
-          value={formik.values.guardianRelationship}
+          value={formik.values.guardianRelationship || ""}
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
           error={
@@ -192,11 +244,24 @@ export default function StudentForm() {
               : null
           }
         />
+        <InputField
+          name="guardianAddress"
+          label="Guardian Address"
+          placeholder="Enter address"
+          value={formik.values.guardianAddress || ""}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          error={
+            formik.touched.guardianAddress
+              ? formik.errors.guardianAddress || null
+              : null
+          }
+        />
 
         <Button
           type="submit"
-          loading={loading}
-          disabled={loading || !(formik.isValid && formik.dirty)}
+          loading={isPending}
+          disabled={isPending || !(formik.isValid && formik.dirty)}
           size="sm"
           className="mt-5 w-fit mx-auto"
         >

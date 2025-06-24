@@ -33,3 +33,30 @@ body {
 .select-class {
   @apply w-full border  px-5  py-4 h-[49px] rounded-[20px] placeholder:text-[#7D7D7D] focus:border-primary   focus:outline-none caret-primary  duration-150;
 }
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader,
+.loader:before,
+.loader:after{
+  width: 50px;
+  aspect-ratio: 1;
+  box-shadow: 0 0 0 3px inset #008dd0;
+  position: relative;
+  animation: l6 1.5s infinite 0.5s;
+}
+.loader:before,
+.loader:after{
+  content: "";
+  position: absolute;
+  left: calc(100% + 5px);
+  animation-delay: 1s;
+}
+.loader:after{
+  left: -60px;
+  animation-delay: 0s;
+}
+@keyframes l6 {
+  0%,55%,100%  {border-radius:0  }
+  20%,30%      {border-radius:50%}
+}

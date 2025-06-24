@@ -18,7 +18,7 @@ export const responseStatus = (
     default:
       // dispatch(fetchUserSuccess({ ...res.data.data.user }));
       // console.log(res.data);
-      toast.success('Success');
+      // toast.success('Success');
       break;
   }
 };

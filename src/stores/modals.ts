@@ -19,3 +19,4 @@ const createModalStore = () =>
 
   
 export const useAssessmentModal = createModalStore();
+export const useTakePicModal = createModalStore();

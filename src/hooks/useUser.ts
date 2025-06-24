@@ -3,14 +3,14 @@ import { ILogin, IUserLoginResponse } from "../lib/types";
 import axios from "../config/axios";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
-// import { dashboardRoute } from "../utils/route";
 import { responseStatus } from "../utils/helpers";
+import { dashboardRoute } from "../utils/route";
 
 export const useLogin = () => {
   const router = useRouter();
 
   // Define the function to handle the registration API call
-  const handleRegister = async (data: ILogin) => {
+  const handleLogin = async (data: ILogin) => {
     const response = await axios.post("/auth/user/login", data);
     return response.data;
   };
@@ -21,20 +21,19 @@ export const useLogin = () => {
     AxiosError<IUserLoginResponse>,
     ILogin
   >({
-    mutationFn: handleRegister,
+    mutationFn: handleLogin,
     onSuccess: (data: IUserLoginResponse) => {
       responseStatus(data.status.code, data.status.message, router);
-
-    //   const accessToken = data.data.authentication.authorizationToken;
-    //   const refreshToken = data.data.authentication.refreshToken;
-    //   const user = data.data.authentication.profile;
-    //   sessionStorage.setItem("accessToken", accessToken);
-    //   sessionStorage.setItem("refreshToken", refreshToken);
-    //   sessionStorage.setItem("user", JSON.stringify(user));
+      const accessToken = data.data.authentication.authorizationToken;
+      const refreshToken = data.data.authentication.refreshToken;
+      const user = data.data.authentication.profile;
+      sessionStorage.setItem("accessToken", accessToken);
+      sessionStorage.setItem("refreshToken", refreshToken);
+      sessionStorage.setItem("user", JSON.stringify(user));
       console.log(data.data);
-      //   if (data.status.code) {
-      //     router.push(dashboardRoute);
-      //   }
+      if (data.status.code === 200) {
+        router.push(dashboardRoute);
+      }
     },
   });
 

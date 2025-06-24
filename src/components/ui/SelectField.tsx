@@ -34,7 +34,7 @@ const SelectField: React.FC<SelectFieldProps> = ({
   description,
   className = "select-class",
 }) => {
-  const selectedOption = options.find((opt) => opt.value === value);
+  const selectedOption = options?.find((opt) => opt.value === value);
 
   //   console.log(options);
   //   console.log(selectedOption);
@@ -69,8 +69,8 @@ const SelectField: React.FC<SelectFieldProps> = ({
             </span>
           </Listbox.Button>
 
-          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white dark:bg-[#eeeeee] shadow-lg p-1 text-sm  focus:outline-none">
-            {options.map((option) => (
+          <Listbox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white shadow-lg p-1 text-sm  focus:outline-none">
+            {options?.map((option) => (
               <Listbox.Option
                 key={option.value}
                 value={option.value}
