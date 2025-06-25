@@ -75,7 +75,7 @@ const PreviewAssessmentModal = () => {
 
               <div className="text-sm text-gray-600">
                 <span className="font-medium text-gray-800">Date: </span>
-                {initialValues.date}
+                {selectedAssessment.date}
               </div>
             </div>
 
@@ -106,7 +106,7 @@ const PreviewAssessmentModal = () => {
                   Remark:
                 </label>
                 <p className="text-sm text-gray-800">
-                  {initialValues.remarks || "No remark added."}
+                  {selectedAssessment.remarks || "No remark added."}
                 </p>
               </div>
             </section>

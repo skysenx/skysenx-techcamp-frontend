@@ -3,9 +3,9 @@ import { userAuth, useVariables } from "../stores/variables";
 import useAxiosAuth from "./auth-hooks/useAxiosAuth";
 import { responseStatus } from "../utils/helpers";
 import { useRouter } from "next/navigation";
-import { IAssesssment, IResponse, IStudent } from "../lib/types";
+import { IAssesssment, IResponse } from "../lib/types";
 import axios, { AxiosError } from "axios";
-import { assessmentRoute, studentsRoute } from "../utils/route";
+import { assessmentRoute } from "../utils/route";
 import { toast } from "sonner";
 
 export const useFindAssessments = () => {
@@ -69,42 +69,26 @@ export const useCreateAssessment = () => {
   // Return the mutation object to use in components
   return mutation;
 };
-export const useUpdateStudent = () => {
+export const useDeleteAssessment = () => {
   const router = useRouter();
   const { post } = useAxiosAuth();
 
-  const updateStudent = async (data: IStudent) => {
-    const res = await post("/student/update", {
-      id: data.id,
-      fullName: data.fullName,
-      gender: data.gender,
-      age: data.age,
-      address: data.address,
-      city: data.city,
-      state: data.state,
-      country: data.country,
-      lastSchool: data.lastSchool,
-      guardianName: data.guardianName,
-      guardianPhone: data.guardianPhone,
-      guardianEmail: data.guardianEmail,
-      guardianAddress: data.guardianAddress,
-      guardianRelationship: data.guardianRelationship,
-      programId: data.program?.id,
-      cohortId: data.cohort?.id,
-    });
+  const handleDeleteAssessment = async (data: IAssesssment) => {
+    const res = await post("/assessment/delete", data);
     return res.data;
   };
-  const mutation = useMutation<IResponse, AxiosError<IResponse>, IStudent>({
-    mutationFn: updateStudent,
+  const mutation = useMutation<IResponse, AxiosError<IResponse>, IAssesssment>({
+    mutationFn: handleDeleteAssessment,
     onSuccess: (data: IResponse) => {
       responseStatus(data.status.code, data.status.message, router);
       console.log(data);
       if (data.status.code === 200) {
-        router.push(studentsRoute);
-        toast.success("Updated Successfully");
+        router.push(assessmentRoute);
+        toast.success("Deleted Successfully");
       }
     },
     onError: (error) => {
+      console.log(error);
       const errorMessage =
         axios.isAxiosError(error) && error.response?.data?.status.message
           ? error.response.data.status.message

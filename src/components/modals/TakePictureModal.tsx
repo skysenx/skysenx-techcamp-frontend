@@ -71,7 +71,7 @@ const TakePictureModal = ({ reg }: { reg: string }) => {
           "Content-Type": "multipart/form-data",
         },
       });
-
+      window.location.reload();
       console.log(response);
       toast.success("Photo uploaded successfully");
       closeModal();

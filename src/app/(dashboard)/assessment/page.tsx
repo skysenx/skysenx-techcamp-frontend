@@ -1,7 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import Pagination from "../../../components/Pagination";
-import { useFindAssessments } from "../../../hooks/useAssessments";
+import {
+  useDeleteAssessment,
+  useFindAssessments,
+} from "../../../hooks/useAssessments";
 import { IAssesssment } from "../../../lib/types";
 import { useVariables } from "../../../stores/variables";
 import SkeletonRow from "../../../components/SkeletonRow";
@@ -9,6 +12,8 @@ import { VscPreview } from "react-icons/vsc";
 import { AiOutlineDelete } from "react-icons/ai";
 import PreviewAssessmentModal from "../../../components/modals/PreviewAssessmentModal";
 import { usePreviewAssessmentModal } from "../../../stores/modals";
+import { FaUserCircle } from "react-icons/fa";
+import { toast } from "sonner";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -34,6 +39,7 @@ export default function Page() {
   const { openModal } = usePreviewAssessmentModal();
   const { page: currentPage, size, setPage: setCurrentPage } = useVariables();
   const { data, isLoading, isError } = useFindAssessments();
+  const { mutate } = useDeleteAssessment();
 
   const assessmentData: IAssesssment[] = data?.data?.assessments;
 
@@ -45,6 +51,23 @@ export default function Page() {
     openModal(assessment);
   };
 
+  const handleDeleteAssessment = (id: string) => {
+    toast.loading("Deleting...");
+    mutate(
+      { id },
+      {
+        onSuccess: () => {
+          toast.dismiss();
+          toast.success("Assessment deleted successfully.");
+          window.location.reload();
+        },
+        onError: () => {
+          toast.dismiss();
+          toast.error("Failed to delete assessment.");
+        },
+      }
+    );
+  };
   // console.log(assessmentData);
 
   const totalItems = data?.data?.size ?? 0;
@@ -78,13 +101,17 @@ export default function Page() {
             >
               <td className="flex gap-3 items-center py-4 px-6 font-medium text-gray-900">
                 <div className="h-10 w-10 rounded-full overflow-hidden">
-                  <img
-                    alt="Image"
-                    src="/images/login-image.png"
-                    className="h-full w-full object-cover"
-                    height={50}
-                    width={50}
-                  />
+                  {a?.student?.photoUrl ? (
+                    <img
+                      alt="Image"
+                      src={a?.student.photoUrl}
+                      className="h-full w-full object-cover"
+                      // height={50}
+                      // width={50}
+                    />
+                  ) : (
+                    <FaUserCircle className="w-full h-full text-[#5358627f]" />
+                  )}
                 </div>
                 <div className="whitespace-nowrap">{a.student?.fullName}</div>
               </td>
@@ -116,6 +143,7 @@ export default function Page() {
                     <VscPreview size={20} className="mx-auto" />
                   </button>
                   <button
+                    onClick={() => handleDeleteAssessment(a.id || "")}
                     className="p-2 text-[#535862] hover:text-secondary cursor-pointer hover:bg-secondary/10 rounded-lg transition-colors duration-150"
                     title="Edit student"
                   >
