@@ -1,46 +1,57 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useAssessmentModal } from "../../stores/modals";
 import { TfiClose } from "react-icons/tfi";
 import InputField from "../ui/InputField";
 import TextAreaField from "../ui/TextAreaField";
-import { toast } from "sonner";
 import { useFormik } from "formik";
 import { IAssesssment } from "../../lib/types";
 import { assessment } from "../../utils/contents";
 import Button from "../ui/Button";
+import { FaUserCircle } from "react-icons/fa";
+import { useCreateAssessment } from "../../hooks/useAssessments";
 
 const AssessmentModal = () => {
-  const { isModalOpen, closeModal } = useAssessmentModal();
-  const [loading, setLoading] = useState(false);
+  const { isModalOpen, selectedStudent, closeModal } = useAssessmentModal();
+  const { mutate, isPending } = useCreateAssessment();
+  const today = new Date().toISOString().split("T")[0]; // e.g., "2025-06-25"
 
   const formik = useFormik<IAssesssment>({
     initialValues: {
-      date: "",
+      date: today || "",
       attentive:
-        assessment.find((a) => a.title === "Attentive")?.grades[0].value || "",
+        assessment
+          .find((a) => a.title === "Attentive")
+          ?.grades[0].value.toUpperCase() || "",
       assignment:
-        assessment.find((a) => a.title === "Assignment")?.grades[0].value || "",
-      punctuality:
-        assessment.find((a) => a.title === "Punctuality")?.grades[0].value ||
-        "",
+        assessment
+          .find((a) => a.title === "Assignment")
+          ?.grades[0].value.toUpperCase() || "",
       behaviour:
-        assessment.find((a) => a.title === "Behaviour")?.grades[0].value || "",
-      remark: "",
+        assessment
+          .find((a) => a.title === "Behaviour")
+          ?.grades[0].value.toUpperCase() || "",
+      remarks: "",
     },
     onSubmit: (values) => {
-      setLoading(true);
-      console.log(values);
-      setTimeout(() => {
-        setLoading(false);
-        closeModal();
-        toast.success("Successful");
-        formik.resetForm();
-      }, 1000);
+      console.log("Assessment for:", selectedStudent);
+      // console.log(values);
+
+      mutate({
+        studentId: selectedStudent?.id,
+        attentive: values.attentive?.toUpperCase(),
+        behaviour: values.behaviour?.toUpperCase(),
+        assignment: values.assignment?.toUpperCase(),
+        date: values.date,
+        remarks: values.remarks,
+      });
     },
   });
+
+  if (!selectedStudent) return null;
 
   return (
     <Dialog
@@ -57,8 +68,26 @@ const AssessmentModal = () => {
             style={{ boxShadow: " -1px 6px 12.5px 0px #00000021" }}
           >
             <div className="flex justify-between items-center">
-              <DialogTitle as="h3" className="text-base font-medium">
-                Oliva Twist
+              <DialogTitle
+                as="h3"
+                className="text-lg font-medium flex items-center gap-4"
+              >
+                <div className="h-12 w-12 rounded-full overflow-hidden">
+                  {selectedStudent.photoUrl ? (
+                    <img
+                      alt="Image"
+                      src={
+                        selectedStudent.photoUrl || "/images/login-image.png"
+                      }
+                      className="h-full w-full object-cover"
+                      // height={50}
+                      // width={50}
+                    />
+                  ) : (
+                    <FaUserCircle className="w-full h-full text-[#5358627f]" />
+                  )}
+                </div>
+                <span>{selectedStudent.fullName}</span>
               </DialogTitle>
 
               <InputField
@@ -66,7 +95,7 @@ const AssessmentModal = () => {
                 label=""
                 type="date"
                 placeholder="Select date"
-                value={formik.values.date}
+                value={formik.values.date || ""}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 error={formik.touched.date ? formik.errors.date || null : null}
@@ -81,7 +110,7 @@ const AssessmentModal = () => {
                   return (
                     <div
                       key={a.title}
-                      className="border border-[#E9EAEB] rounded-[12px] py-[25px] px-4"
+                      className="border border-[#E9EAEB] rounded-[12px] py-5 px-4"
                     >
                       <h4 className="mb-4">{a.title}</h4>
                       <div className="flex gap-4 justify-between flex-wrap">
@@ -89,7 +118,7 @@ const AssessmentModal = () => {
                           <button
                             type="button"
                             key={g.value}
-                            className={`rounded-[30px] border py-[10px] px-4 w-full max-w-[151px] cursor-pointer whitespace-nowrap text-[#535862]
+                            className={`rounded-[30px] border py-[6px] px-4 w-full max-w-[160px] cursor-pointer whitespace-nowrap text-[#535862]
                               ${
                                 formik.values[key] === g.value
                                   ? "bg-primary border-primary text-white"
@@ -108,15 +137,15 @@ const AssessmentModal = () => {
 
                 <div className="border border-[#E9EAEB] rounded-[12px] py-4 px-4">
                   <TextAreaField
-                    name="remark"
+                    name="remarks"
                     label="Remark"
                     placeholder="Type in the remark here......."
-                    value={formik.values.remark}
+                    value={formik.values.remarks || ""}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
                     error={
-                      formik.touched.remark
-                        ? formik.errors.remark || null
+                      formik.touched.remarks
+                        ? formik.errors.remarks || null
                         : null
                     }
                   />
@@ -125,11 +154,10 @@ const AssessmentModal = () => {
 
               <div className="mt-6 flex justify-end">
                 <Button
-                  loading={loading}
-                  disabled={loading || !(formik.isValid && formik.dirty)}
+                  loading={isPending}
+                  disabled={isPending || !(formik.isValid && formik.dirty)}
                   size="sm"
                   type="submit"
-                  className=""
                 >
                   Submit Assessment
                 </Button>

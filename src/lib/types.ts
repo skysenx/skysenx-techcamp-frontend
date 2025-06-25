@@ -78,6 +78,7 @@ export interface IAssesssment {
   created?: string;
   updated?: string;
   student?: IStudent;
+  studentId?: string;
   punctuality?: string;
   instructor?: IInstructor;
 }

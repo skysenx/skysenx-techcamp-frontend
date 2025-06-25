@@ -15,6 +15,9 @@ export const responseStatus = (
     case 11001:
       toast.error(message);
       break;
+    case 11301:
+      toast.warning(message);
+      break;
     default:
       // dispatch(fetchUserSuccess({ ...res.data.data.user }));
       // console.log(res.data);

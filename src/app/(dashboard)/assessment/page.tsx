@@ -1,14 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { FiEdit2 } from "react-icons/fi";
 import Pagination from "../../../components/Pagination";
-import AssessmentModal from "../../../components/modals/AssessmentModal";
-import { useAssessmentModal } from "../../../stores/modals";
 import { useFindAssessments } from "../../../hooks/useAssessments";
 import { IAssesssment } from "../../../lib/types";
 import { useVariables } from "../../../stores/variables";
 import SkeletonRow from "../../../components/SkeletonRow";
+import { VscPreview } from "react-icons/vsc";
 import { AiOutlineDelete } from "react-icons/ai";
+import PreviewAssessmentModal from "../../../components/modals/PreviewAssessmentModal";
+import { usePreviewAssessmentModal } from "../../../stores/modals";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -31,15 +31,18 @@ const StatusBadge = ({ status }: { status: string }) => {
 };
 
 export default function Page() {
-  const { openModal } = useAssessmentModal();
+  const { openModal } = usePreviewAssessmentModal();
   const { page: currentPage, size, setPage: setCurrentPage } = useVariables();
   const { data, isLoading, isError } = useFindAssessments();
 
   const assessmentData: IAssesssment[] = data?.data?.assessments;
 
-  const handleAssessStudent = (studentId: string) => {
-    console.log("Edit student:", studentId);
-    openModal();
+  // const handlePreviewAssessStudent = (studentId: string) => {
+  //   console.log("Edit student:", studentId);
+  //   openModal(st);
+  // };
+  const handlePreviewAssessStudent = (assessment: IAssesssment) => {
+    openModal(assessment);
   };
 
   // console.log(assessmentData);
@@ -63,7 +66,7 @@ export default function Page() {
             <th className="py-4 px-6 text-center font-medium">Attentive</th>
             <th className="py-4 px-6 text-center font-medium">Assignment</th>
             <th className="py-4 px-6 text-center font-medium">Remark</th>
-            {/* <th className="py-4 px-6 text-center font-medium">Class</th> */}
+            <th className="py-4 px-6 text-center font-medium">Class</th>
             <th className="py-4 px-6 text-center font-medium">Actions</th>
           </tr>
         </thead>
@@ -100,17 +103,19 @@ export default function Page() {
               <td className="py-4 px-6 text-center max-w-10 truncate whitespace-nowrap">
                 {a.remarks}
               </td>
+              <td className="py-4 px-6 text-center whitespace-nowrap">
+                {a.student?.program?.name}
+              </td>
               <td className="py-4 px-6 text-center">
-                <div className="flex items-center justify-center gap-2">
+                <div className="flex items-end justify-center gap-2">
                   <button
-                    onClick={() => handleAssessStudent(a.student?.id || "")}
-                    className="p-2 text-[#535862] hover:text-primary hover:bg-primary/10 cursor-pointer rounded-lg transition-colors duration-150"
-                    title="Edit student"
+                    onClick={() => handlePreviewAssessStudent(a)}
+                    className="p-2 text-[#535862] mx-auto hover:text-primary hover:bg-primary/10 cursor-pointer rounded-lg transition-colors duration-150"
+                    title="Preview"
                   >
-                    <FiEdit2 size={18} />
+                    <VscPreview size={20} className="mx-auto" />
                   </button>
                   <button
-                    onClick={() => handleAssessStudent(a.student?.id || "")}
                     className="p-2 text-[#535862] hover:text-secondary cursor-pointer hover:bg-secondary/10 rounded-lg transition-colors duration-150"
                     title="Edit student"
                   >
@@ -200,7 +205,7 @@ export default function Page() {
       ) : (
         renderEmptyState()
       )}
-      <AssessmentModal />
+      <PreviewAssessmentModal />
     </div>
   );
 }

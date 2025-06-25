@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useTakePicModal } from "../../stores/modals";
 import { TfiClose } from "react-icons/tfi";
@@ -10,18 +10,38 @@ import Button from "../ui/Button";
 import { toast } from "sonner";
 import useAxiosAuth from "../../hooks/auth-hooks/useAxiosAuth";
 
-const videoConstraints = {
-  width: 400,
-  height: 300,
-  facingMode: "user",
-};
-
 const TakePictureModal = ({ reg }: { reg: string }) => {
   const { isModalOpen, closeModal } = useTakePicModal();
   const { post } = useAxiosAuth();
   const webcamRef = useRef<Webcam>(null);
   const [image, setImage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+
+  const [devices, setDevices] = useState<MediaDeviceInfo[]>([]);
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string | undefined>(
+    undefined
+  );
+
+  // Fetch camera devices when modal opens
+  useEffect(() => {
+    if (isModalOpen) {
+      navigator.mediaDevices.enumerateDevices().then((mediaDevices) => {
+        const videoInputs = mediaDevices.filter(
+          (device) => device.kind === "videoinput"
+        );
+        setDevices(videoInputs);
+        if (videoInputs.length > 0) {
+          setSelectedDeviceId(videoInputs[0].deviceId); // default to first
+        }
+      });
+    }
+  }, [isModalOpen]);
+
+  const videoConstraints = {
+    width: 400,
+    height: 300,
+    deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined,
+  };
 
   const capture = () => {
     const imgSrc = webcamRef.current?.getScreenshot();
@@ -94,6 +114,23 @@ const TakePictureModal = ({ reg }: { reg: string }) => {
                 <TfiClose className="text-[26px]" />
               </button>
             </div>
+
+            {devices.length > 1 && (
+              <div className="mb-4">
+                <label className="label-class">Select Camera:</label>
+                <select
+                  value={selectedDeviceId}
+                  onChange={(e) => setSelectedDeviceId(e.target.value)}
+                  className="w-full    border border-gray-600 focus:outline-none px-3 py-2 rounded-lg text-sm"
+                >
+                  {devices.map((device, index) => (
+                    <option key={device.deviceId} value={device.deviceId}>
+                      {device.label || `Camera ${index + 1}`}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
             <div className="flex justify-center items-center mb-4">
               {!image ? (

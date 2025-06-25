@@ -77,31 +77,6 @@ export const assessment = [
     ],
   },
   {
-    title: "Punctuality",
-    grades: [
-      {
-        label: "Poor",
-        value: "poor",
-      },
-      {
-        label: "Fair",
-        value: "fair",
-      },
-      {
-        label: "Good",
-        value: "good",
-      },
-      {
-        label: "Very Good",
-        value: "very_good",
-      },
-      {
-        label: "Excellent",
-        value: "excellent",
-      },
-    ],
-  },
-  {
     title: "Assignment",
     grades: [
       {

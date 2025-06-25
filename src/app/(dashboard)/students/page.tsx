@@ -12,6 +12,9 @@ import { IStudent } from "../../../lib/types";
 import SkeletonRow from "../../../components/SkeletonRow";
 import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
+import { TbReport } from "react-icons/tb";
+import { useAssessmentModal } from "../../../stores/modals";
+import AssessmentModal from "../../../components/modals/AssessmentModal";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -35,15 +38,18 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 export default function Page() {
   const router = useRouter();
+  const { openModal } = useAssessmentModal();
   const { page: currentPage, size, setPage: setCurrentPage } = useVariables();
   const { data, isLoading, isError } = useFindStudents();
   const studentsData: IStudent[] = data?.data?.students;
 
+  const handleAssessStudent = (student: IStudent) => {
+    openModal(student);
+  };
   // console.log(studentsData);
 
   const totalItems = data?.data?.size ?? 0;
   const totalPages = Math.ceil(totalItems / size);
-
 
   const handleEditStudent = (studentId: string) => {
     router.push(studentRoute(studentId));
@@ -74,49 +80,55 @@ export default function Page() {
         </thead>
         <tbody className="divide-y divide-[#e9eaeb]">
           {studentsData.map((student: IStudent) => (
-            <tr
-              key={student.id}
-              className="text-sm text-[#535862] hover:bg-gray-50 transition-colors duration-150"
-            >
-              <td className="flex gap-3 items-center py-4 px-6 font-medium text-gray-900">
-                <div className="h-10 w-10 rounded-full overflow-hidden">
-                  {student.photoUrl ? (
-                    <img
-                      alt="Image"
-                      src={student.photoUrl || "/images/login-image.png"}
-                      className="h-full w-full object-cover"
-                      // height={50}
-                      // width={50}
-                    />
-                  ) : (
-                    <FaUserCircle className="w-full h-full text-[#5358627f]" />
-                  )}
-                </div>
-                <div className="whitespace-nowrap">
-                  {student.fullName || ""}
-                </div>
-              </td>
-              <td className="py-4 px-6">
-                <StatusBadge status={student?.attendanceStatus || ""} />
-              </td>
-              <td className="py-4 px-6 font-medium whitespace-nowrap">
-                {student?.program?.name}
-              </td>
-              <td className="py-4 px-6 font-mono whitespace-nowrap">
-                {student.guardianPhone}
-              </td>
-              <td className="py-4 px-6">
-                <div className="flex items-center justify-center gap-2">
-                  <button
-                    onClick={() => handleEditStudent(student.id || "")}
-                    className="p-2 text-[#535862] hover:text-primary hover:bg-blue-50 rounded-lg transition-colors duration-150"
-                    title="Edit student"
-                  >
-                    <FiEdit2 size={16} />
-                  </button>
-                </div>
-              </td>
-            </tr>
+            <React.Fragment key={student.id}>
+              <tr className="text-sm text-[#535862] hover:bg-gray-50 transition-colors duration-150">
+                <td className="flex gap-3 items-center py-4 px-6 font-medium text-gray-900">
+                  <div className="h-10 w-10 rounded-full overflow-hidden">
+                    {student.photoUrl ? (
+                      <img
+                        alt="Image"
+                        src={student.photoUrl || "/images/login-image.png"}
+                        className="h-full w-full object-cover"
+                        // height={50}
+                        // width={50}
+                      />
+                    ) : (
+                      <FaUserCircle className="w-full h-full text-[#5358627f]" />
+                    )}
+                  </div>
+                  <div className="whitespace-nowrap">
+                    {student.fullName || ""}
+                  </div>
+                </td>
+                <td className="py-4 px-6">
+                  <StatusBadge status={student?.attendanceStatus || ""} />
+                </td>
+                <td className="py-4 px-6 font-medium whitespace-nowrap">
+                  {student?.program?.name}
+                </td>
+                <td className="py-4 px-6 font-mono whitespace-nowrap">
+                  {student.guardianPhone}
+                </td>
+                <td className="py-4 px-6">
+                  <div className="flex items-center justify-center gap-2">
+                    <button
+                      onClick={() => handleEditStudent(student.id || "")}
+                      className="p-2 cursor-pointer text-[#535862] hover:text-primary hover:bg-blue-50 rounded-lg transition-colors duration-150"
+                      title="Edit student"
+                    >
+                      <FiEdit2 size={16} />
+                    </button>
+                    <button
+                      onClick={() => handleAssessStudent(student)}
+                      className="p-2 text-[#535862] hover:text-[#12B76A] hover:bg-[#12B76A]/10 rounded-lg transition-colors duration-150 cursor-pointer"
+                      title="Assess student"
+                    >
+                      <TbReport size={20} />
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
@@ -208,6 +220,7 @@ export default function Page() {
       ) : (
         renderEmptyState()
       )}
+      <AssessmentModal />
     </div>
   );
 }

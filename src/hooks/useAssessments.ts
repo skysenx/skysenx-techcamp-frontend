@@ -3,9 +3,9 @@ import { userAuth, useVariables } from "../stores/variables";
 import useAxiosAuth from "./auth-hooks/useAxiosAuth";
 import { responseStatus } from "../utils/helpers";
 import { useRouter } from "next/navigation";
-import { IResponse, IStudent } from "../lib/types";
+import { IAssesssment, IResponse, IStudent } from "../lib/types";
 import axios, { AxiosError } from "axios";
-import { studentsRoute } from "../utils/route";
+import { assessmentRoute, studentsRoute } from "../utils/route";
 import { toast } from "sonner";
 
 export const useFindAssessments = () => {
@@ -42,37 +42,22 @@ export const useCreateAssessment = () => {
   const router = useRouter();
   const { post } = useAxiosAuth();
 
-  const createStudent = async (data: IStudent) => {
-    const res = await post("/student/create", {
-      fullName: data.fullName,
-      gender: data.gender,
-      age: data.age,
-      address: data.address,
-      city: data.city,
-      state: data.state,
-      country: data.country,
-      lastSchool: data.lastSchool,
-      guardianName: data.guardianName,
-      guardianPhone: data.guardianPhone,
-      guardianEmail: data.guardianEmail,
-      guardianAddress: data.guardianAddress,
-      guardianRelationship: data.guardianRelationship,
-      programId: data.program?.id,
-      cohortId: data.cohort?.id,
-    });
+  const handleCreateAssessment = async (data: IAssesssment) => {
+    const res = await post("/assessment/create", data);
     return res.data;
   };
-  const mutation = useMutation<IResponse, AxiosError<IResponse>, IStudent>({
-    mutationFn: createStudent,
+  const mutation = useMutation<IResponse, AxiosError<IResponse>, IAssesssment>({
+    mutationFn: handleCreateAssessment,
     onSuccess: (data: IResponse) => {
       responseStatus(data.status.code, data.status.message, router);
       console.log(data);
       if (data.status.code === 200) {
-        router.push(studentsRoute);
+        router.push(assessmentRoute);
         toast.success("Created Successfully");
       }
     },
     onError: (error) => {
+      console.log(error);
       const errorMessage =
         axios.isAxiosError(error) && error.response?.data?.status.message
           ? error.response.data.status.message

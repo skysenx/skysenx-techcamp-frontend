@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { IAssesssment, IStudent } from "../lib/types";
 
 interface ModalStore {
   isModalOpen: boolean;
@@ -17,6 +18,37 @@ const createModalStore = () =>
     resetState: () => set({ isModalOpen: false }),
   }));
 
-  
-export const useAssessmentModal = createModalStore();
 export const useTakePicModal = createModalStore();
+
+// stores/modals.ts
+
+type AssessmentModalState = {
+  isModalOpen: boolean;
+  selectedStudent: IStudent | null;
+  openModal: (student: IStudent) => void;
+  closeModal: () => void;
+};
+
+export const useAssessmentModal = create<AssessmentModalState>((set) => ({
+  isModalOpen: false,
+  selectedStudent: null,
+  openModal: (student) => set({ isModalOpen: true, selectedStudent: student }),
+  closeModal: () => set({ isModalOpen: false, selectedStudent: null }),
+}));
+
+type PreviewAssessmentModalState = {
+  isModalOpen: boolean;
+  selectedAssessment: IAssesssment | null;
+  openModal: (assessment: IAssesssment) => void;
+  closeModal: () => void;
+};
+
+export const usePreviewAssessmentModal = create<PreviewAssessmentModalState>(
+  (set) => ({
+    isModalOpen: false,
+    selectedAssessment: null,
+    openModal: (assessment) =>
+      set({ isModalOpen: true, selectedAssessment: assessment }),
+    closeModal: () => set({ isModalOpen: false, selectedAssessment: null }),
+  })
+);

@@ -68,7 +68,7 @@ const NavLink: React.FC<NavLinkProps> = ({ item, isActive, onClick }) => {
 const NavLinks: React.FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
   const pathname = usePathname();
 
-  console.log(pathname);
+  // console.log(pathname);
   return (
     <nav className="flex flex-col h-full">
       <div className="flex-1">
