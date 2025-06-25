@@ -25,3 +25,48 @@ export const responseStatus = (
       break;
   }
 };
+
+// utils/formatDateTime.ts
+// utils/formatDateTime.ts
+// const formatter = new Intl.DateTimeFormat("en-US", {
+//   hour: "numeric",
+//   minute: "2-digit",
+//   hour12: false,
+//   day: "numeric",
+//   month: "short",
+//   year: "numeric",
+// });
+
+// /**
+//  * Formats a valid ISO or Date object into:
+//  * "1:06 PM, June 18, 2025"
+//  * Returns "-" if input is invalid.
+//  */
+// export function formatDateTime(raw: string | Date | null | undefined): string {
+//   if (!raw) return "-";
+//   const date = raw instanceof Date ? raw : new Date(raw);
+//   if (isNaN(date.getTime())) return "-";
+//   return formatter.format(date);
+// }
+
+// utils/formatDateTime.ts
+export function formatDateTime(raw: string | Date | null | undefined): string {
+  if (!raw) return "-";
+  const date = raw instanceof Date ? raw : new Date(raw);
+  if (isNaN(date.getTime())) return "-";
+
+  const hours = date.getHours();
+  const minutes = date.getMinutes();
+  const ampm = hours >= 12 ? "PM" : "AM";
+  const hour12 = hours % 12 || 12;
+  const paddedMinutes = minutes.toString().padStart(2, "0");
+
+  const time = `${hour12}:${paddedMinutes} ${ampm}`;
+  const datePart = date.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
+
+  return `${time}, ${datePart}`;
+}

@@ -9,13 +9,15 @@ import { studentsRoute } from "../utils/route";
 import { toast } from "sonner";
 
 export const useFindStudents = () => {
-  const { page, size } = useVariables();
+  const { page, size, filterCriteria, filterValue } = useVariables();
   const { credentials } = userAuth();
   const router = useRouter();
   const { post } = useAxiosAuth();
 
   const fetchStudents = async () => {
     const { data } = await post("/students", {
+      filterCriteria,
+      filterValue,
       page,
       size,
     });
@@ -25,7 +27,7 @@ export const useFindStudents = () => {
   };
 
   return useQuery({
-    queryKey: ["students", page, size],
+    queryKey: ["students", page, size, filterCriteria, filterValue],
     queryFn: fetchStudents,
     // Only run query if user is authenticated
     enabled: !!credentials?.accessToken,

@@ -1,26 +1,50 @@
 import { create } from "zustand";
-import { IUser } from "../lib/types";
+import { IAttendance, IUser } from "../lib/types";
 
 interface Variables {
   from: string;
   to: string;
+  filterValue: string;
+  filterCriteria: string;
   page: number;
   size: number;
   setTo: (page: string) => void;
   setFrom: (size: string) => void;
   setPage: (page: number) => void;
   setSize: (size: number) => void;
+  setFilterValue: (filterValue: string) => void;
+  setFilterCriteria: (filterCriteria: string) => void;
+  reset: () => void;
 }
 
-export const useVariables = create<Variables>((set) => ({
+const defaultState = {
   from: "",
   to: "",
   page: 1,
   size: 10,
+  filterCriteria: "Name",
+  filterValue: "",
+};
+
+export const useVariables = create<Variables>((set) => ({
+  ...defaultState,
   setFrom: (from) => set(() => ({ from })),
   setTo: (to) => set(() => ({ to })),
   setPage: (page) => set(() => ({ page })),
   setSize: (size) => set(() => ({ size })),
+  setFilterValue: (filterValue) => set(() => ({ filterValue })),
+  setFilterCriteria: (filterCriteria) => set(() => ({ filterCriteria })),
+  reset: () => set(() => ({ ...defaultState })),
+}));
+
+interface AttendanceState {
+  students: IAttendance[];
+  setStudents: (data: IAttendance[]) => void;
+}
+
+export const useAttendance = create<AttendanceState>((set) => ({
+  students: [],
+  setStudents: (data) => set({ students: data }),
 }));
 
 type AuthState = {

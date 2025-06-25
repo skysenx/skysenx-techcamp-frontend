@@ -30,7 +30,7 @@ export const useLogin = () => {
       sessionStorage.setItem("accessToken", accessToken);
       sessionStorage.setItem("refreshToken", refreshToken);
       sessionStorage.setItem("user", JSON.stringify(user));
-      console.log(data.data);
+      // console.log(data.data);
       if (data.status.code === 200) {
         router.push(dashboardRoute);
       }

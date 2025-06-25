@@ -9,13 +9,15 @@ import { assessmentRoute } from "../utils/route";
 import { toast } from "sonner";
 
 export const useFindAssessments = () => {
-  const { page, size, from, to } = useVariables();
+  const { page, size, from, to, filterCriteria,filterValue } = useVariables();
   const { credentials } = userAuth();
   const router = useRouter();
   const { post } = useAxiosAuth();
 
   const fetchAssessments = async () => {
     const { data } = await post("/assessments", {
+      // filterCriteria,
+      // filterValue,
       from,
       to,
       page,
@@ -27,7 +29,15 @@ export const useFindAssessments = () => {
   };
 
   return useQuery({
-    queryKey: ["assessments", page, size, from, to],
+    queryKey: [
+      "assessments",
+      page,
+      size,
+      from,
+      to,
+      filterCriteria,
+      filterValue,
+    ],
     queryFn: fetchAssessments,
     // Only run query if user is authenticated
     enabled: !!credentials?.accessToken,

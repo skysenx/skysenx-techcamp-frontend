@@ -2,8 +2,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
-import { userAuth } from "../stores/variables";
+import { usePathname, useRouter } from "next/navigation";
+import { userAuth, useVariables } from "../stores/variables";
 import { loginRoute } from "../utils/route";
 import Pageloading from "../components/ui/PageLoading";
 
@@ -12,12 +12,18 @@ export default function AuthProvider({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = usePathname();
   const router = useRouter();
   const { initializeAuth, credentials } = userAuth();
   const [isInitialized, setIsInitialized] = useState(false);
+  const { reset } = useVariables();
+  // reset();
 
   useEffect(() => {
-    // Initialize auth state first
+    reset(); // reset Zustand store whenever pathname changes
+  }, [pathname, reset]);
+
+  useEffect(() => {
     initializeAuth();
     setIsInitialized(true);
   }, [initializeAuth]);
