@@ -15,6 +15,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { TbReport } from "react-icons/tb";
 import { useAssessmentModal } from "../../../stores/modals";
 import AssessmentModal from "../../../components/modals/AssessmentModal";
+// import { formatDateTime } from "../../../utils/helpers";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -70,12 +71,14 @@ export default function Page() {
         <thead>
           <tr className="text-sm text-[#535862] bg-[#FAFAFA]">
             <th className="py-4 px-6 text-left font-medium">Name</th>
-            <th className="py-4 px-6 text-left font-medium">Status</th>
-            <th className="py-4 px-6 text-left font-medium">Reg No.</th>
-            <th className="py-4 px-6 text-left font-medium">Class</th>
-            <th className="py-4 px-6 text-left font-medium">
+            <th className="py-4 px-6 text-center font-medium">Status</th>
+            <th className="py-4 px-6 text-center font-medium">Reg No.</th>
+            <th className="py-4 px-6 text-center font-medium">Class</th>
+            <th className="py-4 px-6 text-center font-medium">
               Parents Cell No.
             </th>
+            <th className="py-4 px-6 text-center font-medium">Gender</th>
+            {/* <th className="py-4 px-6 text-center font-medium">Created</th> */}
             <th className="py-4 px-6 text-center font-medium">Actions</th>
           </tr>
         </thead>
@@ -101,18 +104,24 @@ export default function Page() {
                     {student.fullName || ""}
                   </div>
                 </td>
-                <td className="py-4 px-6">
+                <td className="py-4 px-6 text-center ">
                   <StatusBadge status={student?.attendanceStatus || ""} />
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap">
+                <td className="py-4 px-6 text-center font-medium whitespace-nowrap">
                   {student?.regNo}
                 </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap">
+                <td className="py-4 px-6 text-center font-medium whitespace-nowrap">
                   {student?.program?.name}
                 </td>
-                <td className="py-4 px-6 font-mono whitespace-nowrap">
+                <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
                   {student.guardianPhone}
                 </td>
+                <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
+                  {student.gender}
+                </td>
+                {/* <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
+                  {formatDateTime(student.created || "")}
+                </td> */}
                 <td className="py-4 px-6">
                   <div className="flex items-center justify-center gap-2">
                     <button

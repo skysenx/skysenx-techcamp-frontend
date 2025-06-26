@@ -44,10 +44,10 @@ export default function Header() {
     switch (filter) {
       case "program":
         return "program";
-        break;
+
       case "cohort":
         return "cohort";
-        break;
+
       default:
         return;
         break;
@@ -78,7 +78,7 @@ export default function Header() {
   // console.log(filterCriteria);
 
   return (
-    <header className="absolute top-0 left-0 right-0 pt-6 pb-3 flex flex-col items-end gap-5 bg-white">
+    <header className="absolute top-0 left-0 right-0 pt-6 flex flex-col items-end gap-2 bg-white">
       <div className="myContainer w-full flex justify-end">
         <Menu>
           <MenuButton className="focus:outline-none">

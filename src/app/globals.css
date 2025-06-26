@@ -17,7 +17,7 @@ body {
 }
 
 .myContainer {
-  @apply mx-auto px-[20px];
+  @apply mx-auto px-[20px] xl:px-[40px];
 }
 
 .label-class {

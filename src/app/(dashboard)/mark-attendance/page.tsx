@@ -29,11 +29,11 @@ export default function Page() {
   const { students } = useAttendance();
 
   return (
-    <div className="flex pt-[20px] gap-16">
+    <div className="flex pt-[20px] gap-16   justify-center">
       <div>
         <CameraViewer />
       </div>
-      <div className="w-full max-w-[533px] mx-auto">
+      <div className="w-full max-w-[533px] mxauto">
         <div className="text-xs font-medium px-6 py-3 bg-[#FAFAFA] border border-[#E9EAEB]">
           Students
         </div>

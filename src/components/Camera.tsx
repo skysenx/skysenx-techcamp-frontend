@@ -94,7 +94,7 @@ const Camera = forwardRef<CameraRef>((_, ref) => {
   }));
 
   return (
-    <div className="w-full">
+    <div className="w-full ">
       {devices.length > 1 && (
         <select
           value={selectedDeviceId}

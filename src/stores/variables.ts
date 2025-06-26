@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { IAttendance, IUser } from "../lib/types";
-
 interface Variables {
   from: string;
   to: string;
@@ -17,9 +16,15 @@ interface Variables {
   reset: () => void;
 }
 
+// Function to get today's date in YYYY-MM-DD format
+const getTodayDate = () => {
+  const today = new Date();
+  return today.toISOString().split("T")[0];
+};
+
 const defaultState = {
-  from: "",
-  to: "",
+  from: getTodayDate(),
+  to: getTodayDate(),
   page: 1,
   size: 10,
   filterCriteria: "",
@@ -34,7 +39,12 @@ export const useVariables = create<Variables>((set) => ({
   setSize: (size) => set(() => ({ size })),
   setFilterValue: (filterValue) => set(() => ({ filterValue })),
   setFilterCriteria: (filterCriteria) => set(() => ({ filterCriteria })),
-  reset: () => set(() => ({ ...defaultState })),
+  reset: () =>
+    set(() => ({
+      ...defaultState,
+      from: getTodayDate(), // Reset to current date when reset is called
+      to: getTodayDate(),
+    })),
 }));
 
 interface AttendanceState {

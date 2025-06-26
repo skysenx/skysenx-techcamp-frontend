@@ -37,7 +37,7 @@ const navigationItems = [
     icon: GrGroup, // you can replace with another icon
   },
   {
-    name: "Mark Attendance",
+    name: "Sign In/Out",
     href: markAttendanceRoute, // example second nav item
     icon: BsPersonFillCheck, // you can replace with another icon
   },
@@ -96,7 +96,7 @@ const NavLinks: React.FC<{ onLinkClick?: () => void }> = ({ onLinkClick }) => {
 
 const SideNav = () => {
   return (
-    <div className="bg-[#F6FCFF] min-w-[270px] h-full">
+    <div className="bg-[#F6FCFF] min-w-[230px] h-full">
       <div className="my-14 flex justify-center px-10">
         <Logo />
       </div>
