@@ -5,6 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { responseStatus } from "../utils/helpers";
 import { dashboardRoute } from "../utils/route";
+import { toast } from "sonner";
 
 export const useLogin = () => {
   const router = useRouter();
@@ -33,6 +34,7 @@ export const useLogin = () => {
       // console.log(data.data);
       if (data.status.code === 200) {
         router.push(dashboardRoute);
+        toast.success("Login Successful");
       }
     },
   });

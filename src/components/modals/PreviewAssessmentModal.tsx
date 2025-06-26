@@ -14,8 +14,8 @@ const PreviewAssessmentModal = () => {
     usePreviewAssessmentModal();
   const today = new Date().toISOString().split("T")[0];
 
-  console.log(isModalOpen);
-  console.log(selectedAssessment);
+  // console.log(isModalOpen);
+  // console.log(selectedAssessment);
 
   const initialValues: IAssesssment = {
     date: today,

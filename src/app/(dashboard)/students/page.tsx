@@ -71,6 +71,7 @@ export default function Page() {
           <tr className="text-sm text-[#535862] bg-[#FAFAFA]">
             <th className="py-4 px-6 text-left font-medium">Name</th>
             <th className="py-4 px-6 text-left font-medium">Status</th>
+            <th className="py-4 px-6 text-left font-medium">Reg No.</th>
             <th className="py-4 px-6 text-left font-medium">Class</th>
             <th className="py-4 px-6 text-left font-medium">
               Parents Cell No.
@@ -102,6 +103,9 @@ export default function Page() {
                 </td>
                 <td className="py-4 px-6">
                   <StatusBadge status={student?.attendanceStatus || ""} />
+                </td>
+                <td className="py-4 px-6 font-medium whitespace-nowrap">
+                  {student?.regNo}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap">
                   {student?.program?.name}

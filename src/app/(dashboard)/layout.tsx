@@ -15,7 +15,7 @@ export default function Layout({
 
         <div className="flex-2/3 h-screen relative">
           <Header />
-          <main className="h-screen pt-28 pb-4">
+          <main className="h-screen pt-48 pb-4">
             <div className="myContainer h-full pb-20 overflow-auto">
               {children}
             </div>

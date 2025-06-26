@@ -22,7 +22,7 @@ const defaultState = {
   to: "",
   page: 1,
   size: 10,
-  filterCriteria: "Name",
+  filterCriteria: "",
   filterValue: "",
 };
 

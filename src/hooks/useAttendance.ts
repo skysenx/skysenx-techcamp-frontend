@@ -12,14 +12,14 @@ export const useFindAttendance = () => {
 
   const fetchAttendnaces = async () => {
     const { data } = await post("/attendances", {
-      // filterCriteria,
-      // filterValue,
+      filterCriteria,
+      filterValue,
       from,
       to,
       page,
       size,
     });
-    // console.log("Students data hook:", data);
+    console.log("Students data hook:", data);
     responseStatus(data.status.code, data.status.message, router);
     return data;
   };

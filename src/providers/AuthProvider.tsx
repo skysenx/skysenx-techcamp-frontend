@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { userAuth, useVariables } from "../stores/variables";
 import { loginRoute } from "../utils/route";
 import Pageloading from "../components/ui/PageLoading";
+import { useAssessmentModal } from "../stores/modals";
 
 export default function AuthProvider({
   children,
@@ -17,10 +18,12 @@ export default function AuthProvider({
   const { initializeAuth, credentials } = userAuth();
   const [isInitialized, setIsInitialized] = useState(false);
   const { reset } = useVariables();
+  const { closeModal } = useAssessmentModal();
   // reset();
 
   useEffect(() => {
     reset(); // reset Zustand store whenever pathname changes
+    closeModal(); // reset Zustand store whenever pathname changes
   }, [pathname, reset]);
 
   useEffect(() => {

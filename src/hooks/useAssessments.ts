@@ -16,8 +16,8 @@ export const useFindAssessments = () => {
 
   const fetchAssessments = async () => {
     const { data } = await post("/assessments", {
-      // filterCriteria,
-      // filterValue,
+      filterCriteria,
+      filterValue,
       from,
       to,
       page,
