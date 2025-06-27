@@ -119,9 +119,7 @@ export default function Page() {
                 <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
                   {student.gender}
                 </td>
-                {/* <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
-                  {formatDateTime(student.created || "")}
-                </td> */}
+             
                 <td className="py-4 px-6">
                   <div className="flex items-center justify-center gap-2">
                     <button
