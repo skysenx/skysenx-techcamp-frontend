@@ -77,7 +77,7 @@ export default function Page() {
               name="otp"
               label="OTP"
               placeholder="Enter OTP"
-              type="otp"
+              type="password"
               value={formik.values.otp}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -95,7 +95,7 @@ export default function Page() {
           </form>
         </div>
       </div>
-      <div className="login-bg bg-red-300 flex-1/2 shrink"></div>
+      <div className="login-bg flex-1/2 shrink"></div>
     </section>
   );
 }
