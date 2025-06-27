@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
 import { TbReport } from "react-icons/tb";
 import { useAssessmentModal } from "../../../stores/modals";
-import AssessmentModal from "../../../components/modals/AssessmentModal";
+// import AssessmentModal from "../../../components/modals/AssessmentModal";
 // import { formatDateTime } from "../../../utils/helpers";
 
 const StatusBadge = ({ status }: { status: string }) => {
@@ -233,7 +233,7 @@ export default function Page() {
       ) : (
         renderEmptyState()
       )}
-      <AssessmentModal />
+      {/* <AssessmentModal /> */}
     </div>
   );
 }
