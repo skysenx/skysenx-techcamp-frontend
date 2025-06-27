@@ -5,34 +5,11 @@ import React from "react";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { usePreviewAssessmentModal } from "../../stores/modals";
 import { TfiClose } from "react-icons/tfi";
-import { IAssesssment } from "../../lib/types";
-import { assessment } from "../../utils/contents";
 import { FaUserCircle } from "react-icons/fa";
 
 const PreviewAssessmentModal = () => {
   const { isModalOpen, selectedAssessment, closeModal } =
     usePreviewAssessmentModal();
-  const today = new Date().toISOString().split("T")[0];
-
-  // console.log(isModalOpen);
-  // console.log(selectedAssessment);
-
-  const initialValues: IAssesssment = {
-    date: today,
-    attentive:
-      assessment
-        .find((a) => a.title === "Attentive")
-        ?.grades[0].value.toUpperCase() || "",
-    assignment:
-      assessment
-        .find((a) => a.title === "Assignment")
-        ?.grades[0].value.toUpperCase() || "",
-    behaviour:
-      assessment
-        .find((a) => a.title === "Behaviour")
-        ?.grades[0].value.toUpperCase() || "",
-    remarks: "",
-  };
 
   if (!selectedAssessment) return null;
 
@@ -81,25 +58,30 @@ const PreviewAssessmentModal = () => {
 
             {/* Preview Content */}
             <section className="mt-5 grid grid-cols-3 gap-4">
-              {assessment.map((a) => {
-                const key = a.title.toLowerCase() as keyof IAssesssment;
-
-                return (
-                  <div
-                    key={a.title}
-                    className="border border-[#E9EAEB] rounded-[12px] py-5 px-4"
-                  >
-                    <h4 className="mb-2 font-medium text-gray-800">
-                      {a.title}
-                    </h4>
-                    <div>
-                      <span className="inline-block py-1 px-3 rounded-full bg-[#EDF7FC] text-primary text-sm font-medium">
-                        {String(initialValues[key] ?? "")}
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
+              <div className="border border-[#E9EAEB] rounded-[12px] py-5 px-4">
+                <h4 className="mb-2 font-medium text-gray-800">Behaviour</h4>
+                <div>
+                  <span className="inline-block py-1 px-3 rounded-full bg-[#EDF7FC] text-primary text-sm font-medium">
+                    {selectedAssessment.behaviour}
+                  </span>
+                </div>
+              </div>
+              <div className="border border-[#E9EAEB] rounded-[12px] py-5 px-4">
+                <h4 className="mb-2 font-medium text-gray-800">Attentive</h4>
+                <div>
+                  <span className="inline-block py-1 px-3 rounded-full bg-[#EDF7FC] text-primary text-sm font-medium">
+                    {selectedAssessment.attentive}
+                  </span>
+                </div>
+              </div>
+              <div className="border border-[#E9EAEB] rounded-[12px] py-5 px-4">
+                <h4 className="mb-2 font-medium text-gray-800">Assignment</h4>
+                <div>
+                  <span className="inline-block py-1 px-3 rounded-full bg-[#EDF7FC] text-primary text-sm font-medium">
+                    {selectedAssessment.assignment}
+                  </span>
+                </div>
+              </div>
 
               <div className="border border-[#E9EAEB] rounded-[12px] py-4 px-4">
                 <label className="block text-sm text-gray-600 mb-1 font-medium">

@@ -37,17 +37,23 @@ const AssessmentModal = () => {
       remarks: "",
     },
     onSubmit: (values) => {
-      console.log("Assessment for:", selectedStudent);
+      // console.log("Assessment for:", selectedStudent);
       // console.log(values);
-
-      mutate({
-        studentId: selectedStudent?.id,
-        attentive: values.attentive?.toUpperCase(),
-        behaviour: values.behaviour?.toUpperCase(),
-        assignment: values.assignment?.toUpperCase(),
-        date: values.date,
-        remarks: values.remarks,
-      });
+      mutate(
+        {
+          studentId: selectedStudent?.id,
+          attentive: values.attentive?.toUpperCase(),
+          behaviour: values.behaviour?.toUpperCase(),
+          assignment: values.assignment?.toUpperCase(),
+          date: values.date,
+          remarks: values.remarks,
+        },
+        {
+          onSuccess: () => {
+            formik.resetForm();
+          },
+        }
+      );
     },
   });
 

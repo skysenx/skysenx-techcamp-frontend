@@ -7,9 +7,10 @@ import { IAssesssment, IResponse } from "../lib/types";
 import axios, { AxiosError } from "axios";
 import { assessmentRoute } from "../utils/route";
 import { toast } from "sonner";
+import { useAssessmentModal } from "../stores/modals";
 
 export const useFindAssessments = () => {
-  const { page, size, from, to, filterCriteria,filterValue } = useVariables();
+  const { page, size, from, to, filterCriteria, filterValue } = useVariables();
   const { credentials } = userAuth();
   const router = useRouter();
   const { post } = useAxiosAuth();
@@ -49,6 +50,7 @@ export const useFindAssessments = () => {
 };
 
 export const useCreateAssessment = () => {
+  const { closeModal } = useAssessmentModal();
   const router = useRouter();
   const { post } = useAxiosAuth();
 
@@ -60,10 +62,11 @@ export const useCreateAssessment = () => {
     mutationFn: handleCreateAssessment,
     onSuccess: (data: IResponse) => {
       responseStatus(data.status.code, data.status.message, router);
-      console.log(data);
+      // console.log(data);
       if (data.status.code === 200) {
-        router.push(assessmentRoute);
+        // router.push(assessmentRoute);
         toast.success("Created Successfully");
+        closeModal();
       }
     },
     onError: (error) => {

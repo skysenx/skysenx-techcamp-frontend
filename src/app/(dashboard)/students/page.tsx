@@ -62,7 +62,7 @@ export default function Page() {
   };
 
   const handleAddStudent = () => {
-    console.log("Add new student");
+    router.push(createstudentRoute);
   };
 
   const renderTable = () => (
