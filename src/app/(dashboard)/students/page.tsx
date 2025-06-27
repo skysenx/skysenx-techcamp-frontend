@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 import { FaUserCircle } from "react-icons/fa";
 import { TbReport } from "react-icons/tb";
 import { useAssessmentModal } from "../../../stores/modals";
+import AssessModal from "../../../components/modals/AssessModal";
 // import AssessmentModal from "../../../components/modals/AssessmentModal";
 // import { formatDateTime } from "../../../utils/helpers";
 
@@ -231,7 +232,7 @@ export default function Page() {
       ) : (
         renderEmptyState()
       )}
-      {/* <AssessmentModal /> */}
+      <AssessModal />
     </div>
   );
 }
