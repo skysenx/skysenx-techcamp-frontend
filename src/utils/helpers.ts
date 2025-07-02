@@ -70,3 +70,7 @@ export function formatDateTime(raw: string | Date | null | undefined): string {
 
   return `${time}, ${datePart}`;
 }
+
+export function capitalizeWords(str: string): string {
+  return str.replace(/\b\w/g, (char: string) => char.toUpperCase());
+}

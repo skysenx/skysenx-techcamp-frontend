@@ -15,6 +15,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { TbReport } from "react-icons/tb";
 import { useAssessmentModal } from "../../../stores/modals";
 import AssessModal from "../../../components/modals/AssessModal";
+import { capitalizeWords } from "../../../utils/helpers";
 // import AssessmentModal from "../../../components/modals/AssessmentModal";
 // import { formatDateTime } from "../../../utils/helpers";
 
@@ -102,7 +103,7 @@ export default function Page() {
                     )}
                   </div>
                   <div className="whitespace-nowrap">
-                    {student.fullName || ""}
+                    {capitalizeWords(student?.fullName || "")}
                   </div>
                 </td>
                 <td className="py-4 px-6 text-center ">
@@ -120,7 +121,7 @@ export default function Page() {
                 <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
                   {student.gender}
                 </td>
-             
+
                 <td className="py-4 px-6">
                   <div className="flex items-center justify-center gap-2">
                     <button

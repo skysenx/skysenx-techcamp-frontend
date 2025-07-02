@@ -6,7 +6,7 @@ import { useVariables } from "../../../stores/variables";
 import SkeletonRow from "../../../components/SkeletonRow";
 import { FaUserCircle } from "react-icons/fa";
 import { useFindAttendance } from "../../../hooks/useAttendance";
-import { formatDateTime } from "../../../utils/helpers";
+import { capitalizeWords, formatDateTime } from "../../../utils/helpers";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -75,7 +75,7 @@ export default function Page() {
                     <FaUserCircle className="w-full h-full text-[#5358627f]" />
                   )}
                 </div>
-                <div className="whitespace-nowrap">{a.student?.fullName}</div>
+                <div className="whitespace-nowrap">{capitalizeWords(a.student?.fullName || '')}</div>
               </td>
               <td className="py-4 px-6 text-center">
                 <StatusBadge status={a.student?.attendanceStatus || ""} />
