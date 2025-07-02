@@ -14,7 +14,7 @@ import PreviewAssessmentModal from "../../../components/modals/PreviewAssessment
 import { usePreviewAssessmentModal } from "../../../stores/modals";
 import { FaUserCircle } from "react-icons/fa";
 import { toast } from "sonner";
-import { capitalizeWords } from "../../../utils/helpers";
+import { capitalizeWords, formatDateTime } from "../../../utils/helpers";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -91,6 +91,7 @@ export default function Page() {
             <th className="py-4 px-6 text-center font-medium">Assignment</th>
             <th className="py-4 px-6 text-center font-medium">Remark</th>
             <th className="py-4 px-6 text-center font-medium">Class</th>
+            <th className="py-4 px-6 text-center font-medium">Date</th>
             <th className="py-4 px-6 text-center font-medium">Actions</th>
           </tr>
         </thead>
@@ -114,7 +115,9 @@ export default function Page() {
                     <FaUserCircle className="w-full h-full text-[#5358627f]" />
                   )}
                 </div>
-                <div className="whitespace-nowrap">{capitalizeWords(a.student?.fullName || '')}</div>
+                <div className="whitespace-nowrap">
+                  {capitalizeWords(a.student?.fullName || "")}
+                </div>
               </td>
               <td className="py-4 px-6 text-center">
                 <StatusBadge status={a.student?.attendanceStatus || ""} />
@@ -133,6 +136,9 @@ export default function Page() {
               </td>
               <td className="py-4 px-6 text-center whitespace-nowrap">
                 {a.student?.program?.name}
+              </td>
+              <td className="py-4 px-6 text-center whitespace-nowrap">
+                {formatDateTime(a?.created)}
               </td>
               <td className="py-4 px-6 text-center">
                 <div className="flex items-end justify-center gap-2">
