@@ -185,7 +185,7 @@ export default function Header() {
                 }}
                 className="w-full border border-[#E9EAEB]  py-3 px-5 h-[48px] placeholder:text-[#535862] focus:border-primary   focus:outline-none caret-primary  duration-150 rounded-[12px]  appearance-none"
               >
-                <option value="">Select Filter</option>
+                {/* <option value="">Select Filter</option> */}
                 <option value="Name">Name</option>
                 <option value="Reg_No">Reg Number</option>
                 <option value="Phone">Phone</option>

@@ -33,7 +33,7 @@ export default function Page() {
       <div>
         <CameraViewer />
       </div>
-      <div className="w-full max-w-[533px] mxauto">
+      <div className="w-full max-w-[300px]">
         <div className="text-xs font-medium px-6 py-3 bg-[#FAFAFA] border border-[#E9EAEB]">
           Students
         </div>

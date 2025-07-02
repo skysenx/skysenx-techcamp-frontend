@@ -40,7 +40,7 @@ const Camera = forwardRef<CameraRef>((_, ref) => {
   }, []);
 
   const videoConstraints = {
-    width: 500,
+    width: 800,
     height: 400,
     deviceId: selectedDeviceId ? { exact: selectedDeviceId } : undefined,
   };

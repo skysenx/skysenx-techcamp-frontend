@@ -22,13 +22,13 @@ export default function Page() {
   return (
     <div className="flex gap-10 justify-center items-start">
       <div className="flex flex-col items-center ">
-        <div className="w-[350px] h-[400px] rounded-2xl overflow-hidden">
+        <div className="h-[300px] w-[350px] bg-black rounded-2xl overflow-hidden flex justify-center items-center">
           {student?.photoUrl ? (
             <img
               alt="Image"
               src={student?.photoUrl}
               // src={"/images/login-image.png"}
-              className="h-full w-full object-cover"
+              className="object-contain"
               // height={50}
               // width={50}
             />

@@ -19,7 +19,7 @@ export const useFindAttendance = () => {
       page,
       size,
     });
-    console.log("Students data hook:", data);
+    // console.log("Students data hook:", data);
     responseStatus(data.status.code, data.status.message, router);
     return data;
   };

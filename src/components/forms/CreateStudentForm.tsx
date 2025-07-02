@@ -32,9 +32,9 @@ export default function StudentForm() {
       age: 0,
       gender: "",
       address: "",
-      city: "",
-      state: "",
-      country: "",
+      city: "Warri",
+      state: "Delta",
+      country: "Nigeria",
       program: {
         id: "",
       },
