@@ -69,8 +69,8 @@ export const studentValidation = Yup.object({
     // ),
 
   guardianEmail: Yup.string()
-    .email("Invalid email")
-    .required("Guardian email is required"),
+    .email("Invalid email"),
+    // .required("Guardian email is required"),
 
   guardianRelationship: Yup.string()
     .required("Relationship is required")
