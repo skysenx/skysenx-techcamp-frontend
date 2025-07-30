@@ -62,11 +62,11 @@ export const studentValidation = Yup.object({
     .max(50, "Must be at most 50 characters"),
 
   guardianPhone: Yup.string()
-    .required("Guardian contact is required")
-    .matches(
-      /^(07|08|09)\d{9}$/,
-      "Phone number must start with 07, 08, or 09 and be 11 digits"
-    ),
+    .required("Guardian contact is required"),
+    // .matches(
+    //   /^(07|08|09)\d{9}$/,
+    //   "Phone number must start with 07, 08, or 09 and be 11 digits"
+    // ),
 
   guardianEmail: Yup.string()
     .email("Invalid email")
