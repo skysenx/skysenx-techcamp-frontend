@@ -27,7 +27,7 @@ const defaultState = {
   to: getTodayDate(),
   page: 1,
   size: 10,
-  filterCriteria: "",
+  filterCriteria: "Name",
   filterValue: "",
 };
 

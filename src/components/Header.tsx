@@ -182,6 +182,7 @@ export default function Header() {
                 onChange={(e) => {
                   setFilterCriteria(e.target.value);
                   setFilterValue("");
+                  console.log(e.target.value)
                 }}
                 className="w-full border border-[#E9EAEB]  py-3 px-5 h-[48px] placeholder:text-[#535862] focus:border-primary   focus:outline-none caret-primary  duration-150 rounded-[12px]  appearance-none"
               >
