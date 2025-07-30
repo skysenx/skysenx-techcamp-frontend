@@ -21,7 +21,7 @@ export const useFindStudents = () => {
       page,
       size,
     });
-    // console.log("Students data hook:", data);
+    console.log("Students data hook:", filterCriteria, filterValue);
     responseStatus(data.status.code, data.status.message, router);
     return data;
   };
