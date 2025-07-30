@@ -29,7 +29,7 @@ export default function Page() {
   const { students } = useAttendance();
 
   return (
-    <div className="flex pt-[20px] gap-16   justify-center">
+    <div className="flex pt-[20px] gap-16   justify-center flex-col lg:flex-row">
       <div>
         <CameraViewer />
       </div>

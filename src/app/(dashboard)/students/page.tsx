@@ -49,7 +49,7 @@ export default function Page() {
   const handleAssessStudent = (student: IStudent) => {
     openModal(student);
   };
-  // console.log(studentsData);
+  console.log(studentsData);
 
   const totalItems = data?.data?.size ?? 0;
   const totalPages = Math.ceil(totalItems / size);
@@ -76,10 +76,13 @@ export default function Page() {
             <th className="py-4 px-6 text-center font-medium">Status</th>
             <th className="py-4 px-6 text-center font-medium">Reg No.</th>
             <th className="py-4 px-6 text-center font-medium">Class</th>
-            <th className="py-4 px-6 text-center font-medium">
+            <th className="py-4 px-6 text-center font-medium whitespace-nowrap">
               Parents Cell No.
             </th>
             <th className="py-4 px-6 text-center font-medium">Gender</th>
+            <th className="py-4 px-6 text-center font-medium whitespace-nowrap">
+              Registered By
+            </th>
             {/* <th className="py-4 px-6 text-center font-medium">Created</th> */}
             <th className="py-4 px-6 text-center font-medium">Actions</th>
           </tr>
@@ -119,7 +122,10 @@ export default function Page() {
                   {student.guardianPhone}
                 </td>
                 <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
-                  {student.gender}
+                  {student?.gender}
+                </td>
+                <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
+                  {student?.registeredBy?.firstname}
                 </td>
 
                 <td className="py-4 px-6">

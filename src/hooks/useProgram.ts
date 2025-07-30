@@ -13,7 +13,7 @@ export const useFindPrograms = () => {
   const fetchPrograms = async () => {
     const { data } = await post("/programs", {
       page,
-      size,
+      size:100,
     });
     // console.log("Students data hook:", data);
     responseStatus(data.status.code, data.status.message, router);
