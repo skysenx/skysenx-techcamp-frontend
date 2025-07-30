@@ -65,7 +65,7 @@ export interface IStudent {
   updated?: string;
   cohort?: ICohort;
   program?: IProgram;
-  registeredBy?: IUser;
+  registeredBy?: IInstructor;
   previousTraining?: string;
 }
 

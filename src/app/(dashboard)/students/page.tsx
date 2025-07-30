@@ -125,7 +125,7 @@ export default function Page() {
                   {student?.gender}
                 </td>
                 <td className="py-4 px-6 text-center font-mono whitespace-nowrap">
-                  {student?.registeredBy?.firstname}
+                  {student?.registeredBy?.userProfile?.firstname}
                 </td>
 
                 <td className="py-4 px-6">
