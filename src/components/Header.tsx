@@ -85,7 +85,7 @@ export default function Header() {
             <div className="flex items-center gap-4">
               <PiUserCircleThin className="text-[34px]" />
               <span className="text-sm inline-block whitespace-nowrap">
-                {credentials?.user.firstname || ""}
+                {credentials?.user?.firstname || ""}
               </span>
               <IoChevronDown className="text-[18px]" />
             </div>
@@ -140,7 +140,7 @@ export default function Header() {
                 className="w-full border border-[#E9EAEB]  py-3 px-5 h-[48px] placeholder:text-[#535862] focus:border-primary   focus:outline-none caret-primary  duration-150 rounded-[12px]  appearance-none"
               >
                 <option value="">Select a Program</option>
-                {programs.map((p: IProgram) => (
+                {programs?.map((p: IProgram) => (
                   <option key={p.id} value={p.id}>
                     {p.name}
                   </option>
@@ -162,7 +162,7 @@ export default function Header() {
                 className="w-full border border-[#E9EAEB]  py-3 px-5 h-[48px] placeholder:text-[#535862] focus:border-primary   focus:outline-none caret-primary  duration-150 rounded-[12px]  appearance-none"
               >
                 <option value="">Select a Cohort</option>
-                {cohorts.map((c: ICohort) => (
+                {cohorts?.map((c: ICohort) => (
                   <option key={c.id} value={c.id}>
                     {c.name}
                   </option>
