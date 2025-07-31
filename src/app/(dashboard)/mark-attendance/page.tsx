@@ -16,7 +16,7 @@ const StatusBadge = ({ status }: { status: string }) => {
       }`}
     >
       <span
-        className={`w-[6px] h-[6px] rounded-full mr-[6px] ${
+        className={`w-[6px] h-[6px] min-h-[6px] min-w-[6px] rounded-full mr-[6px] ${
           isPresent ? "bg-[#12B76A]" : "bg-[#B71212]"
         }`}
       ></span>
@@ -33,14 +33,14 @@ export default function Page() {
       <div>
         <CameraViewer />
       </div>
-      <div className="w-full max-w-[300px]">
+      <div className="w-full max-w-fit min-w-[400px]">
         <div className="text-xs font-medium px-6 py-3 bg-[#FAFAFA] border border-[#E9EAEB]">
           Students
         </div>
 
         {/* student */}
         <div className="min-h-[300px]">
-          {students.map((s) => (
+          {students?.map((s) => (
             <div
               key={s.id}
               className="flex gap-3 items-center px-6 py-4 border border-t-0 border-[#E9EAEB] hover:bg-[#F0F0F0]"
@@ -49,15 +49,17 @@ export default function Page() {
                 {s?.student?.photoUrl ? (
                   <img
                     alt="Image"
-                    src={s?.student.photoUrl}
+                    src={s?.student?.photoUrl}
                     className="h-full w-full object-cover"
                   />
                 ) : (
                   <FaUserCircle className="w-full h-full text-[#5358627f]" />
                 )}
               </div>
-              <div className="flex justify-between w-full">
-                <p className="font-medium text-lg">{s.student?.fullName}</p>
+              <div className="flex justify-between w-full gap-10">
+                <p className="font-medium text-lg whitespace-nowrap">
+                  {s.student?.fullName}
+                </p>
                 <StatusBadge status={s.student?.attendanceStatus || ""} />
               </div>
             </div>
