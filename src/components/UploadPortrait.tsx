@@ -48,6 +48,7 @@ export default function UploadPortrait({ student, reg }: UploadPortraitProps) {
 
       console.log(response);
       toast.success("Photo uploaded successfully");
+      window.location.reload();
     } catch (err) {
       console.error(err);
       toast.error("Photo upload failed");
@@ -59,17 +60,27 @@ export default function UploadPortrait({ student, reg }: UploadPortraitProps) {
   return (
     <div className="flex flex-col items-center">
       {/* Preview Box */}
-      <div className="h-[300px] w-[350px] bg-black rounded-2xl overflow-hidden flex justify-center items-center">
-        {preview ? (
+      {!preview && student?.passportUrl ? (
+        <div className="h-[300px] w-[350px] bg-black rounded-2xl overflow-hidden flex justify-center items-center">
           <img
-            src={preview}
+            src={student?.passportUrl}
             alt="Preview"
             className="object-cover h-full w-full"
           />
-        ) : (
-          <FaUserCircle className="w-full h-full text-[#5358627f]" />
-        )}
-      </div>
+        </div>
+      ) : (
+        <div className="h-[300px] w-[350px] bg-black rounded-2xl overflow-hidden flex justify-center items-center">
+          {preview ? (
+            <img
+              src={preview}
+              alt="Preview"
+              className="object-cover h-full w-full"
+            />
+          ) : (
+            <FaUserCircle className="w-full h-full text-[#5358627f]" />
+          )}
+        </div>
+      )}
 
       {/* Hidden File Input */}
       {!preview && (
