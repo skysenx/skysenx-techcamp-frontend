@@ -18,7 +18,7 @@ export default function Page() {
   const { data } = useFindStudent(id as string);
   const student: IStudent = data?.data?.student;
 
-  console.log(student);
+  // console.log(student);
 
   return (
     <div className="flex gap-10 justify-center items-start">
