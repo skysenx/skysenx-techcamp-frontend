@@ -16,8 +16,11 @@ import { TbReport } from "react-icons/tb";
 import { useAssessmentModal } from "../../../stores/modals";
 import AssessModal from "../../../components/modals/AssessModal";
 import { capitalizeWords } from "../../../utils/helpers";
+// import useAxiosAuth from "../../../hooks/auth-hooks/useAxiosAuth";
 // import AssessmentModal from "../../../components/modals/AssessmentModal";
 // import { formatDateTime } from "../../../utils/helpers";
+// import { jsPDF } from "jspdf";
+// import autoTable from "jspdf-autotable";
 
 const StatusBadge = ({ status }: { status: string }) => {
   const isPresent = status === "PRESENT";
@@ -41,6 +44,7 @@ const StatusBadge = ({ status }: { status: string }) => {
 
 export default function Page() {
   const router = useRouter();
+  // const { post } = useAxiosAuth();
   const { openModal } = useAssessmentModal();
   const { page: currentPage, size, setPage: setCurrentPage } = useVariables();
   const { data, isLoading, isError } = useFindStudents();
@@ -49,7 +53,7 @@ export default function Page() {
   const handleAssessStudent = (student: IStudent) => {
     openModal(student);
   };
-  console.log(studentsData);
+  // console.log(studentsData);
 
   const totalItems = data?.data?.size ?? 0;
   const totalPages = Math.ceil(totalItems / size);
@@ -66,6 +70,61 @@ export default function Page() {
   const handleAddStudent = () => {
     router.push(createstudentRoute);
   };
+  // const handlePrint = async () => {
+  //   try {
+  //     const res = await post("/students/export", {
+  //       page: 1,
+  //       size: 200,
+  //       filterValue: "b2629e6d-b640-4a86-b74a-a99ed99607e5",
+  //       filterCriteria: "program",
+  //     });
+
+  //     console.log(res);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  // const handlePrint = async () => {
+  //   try {
+  //     const res = await post("/students/export", {
+  //       page: 1,
+  //       size: 200,
+  //       filterValue: "729d8640-a49e-432b-a353-7e6ac58224f8",
+  //       filterCriteria: "program",
+  //     });
+
+  //     // res should be your CSV string
+  //     const csvData = res.data; // e.g. "RegNo,FullName,Corrections,Program,Remarks\nSTU2025-TEEJ,..."
+
+  //     // Step 1: Split CSV into rows
+  //     const rows = csvData
+  //       .trim()
+  //       .split("\n")
+  //       .map((row: string) => row.split(","));
+
+  //     // First row is the header
+  //     const headers = rows[0];
+  //     const body = rows.slice(1);
+
+  //     // Step 2: Create PDF
+  //     const doc = new jsPDF();
+
+  //     doc.text("Students Report", 14, 10);
+
+  //     autoTable(doc, {
+  //       head: [headers],
+  //       body: body,
+  //       styles: { fontSize: 8 },
+  //       headStyles: { fillColor: [22, 160, 133] },
+  //     });
+
+  //     // Step 3: Save PDF
+  //     doc.save("ai-students.pdf");
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
 
   const renderTable = () => (
     <div className="overflow-x-auto">
@@ -224,9 +283,22 @@ export default function Page() {
             {totalItems || 0} student(s)
           </div>
         </div>
-        <Button size="sm" onClick={handleAddStudent} href={createstudentRoute}>
-          Add Student
-        </Button>
+        <div className="flex gap-4">
+          <Button
+            size="sm"
+            onClick={handleAddStudent}
+            href={createstudentRoute}
+          >
+            Add Student
+          </Button>
+          {/* <Button
+            size="sm"
+            onClick={handlePrint}
+            // href={createstudentRoute}
+          >
+            Print
+          </Button> */}
+        </div>
       </div>
 
       {/* Content */}

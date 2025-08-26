@@ -58,6 +58,7 @@ export interface IStudent {
   guardianAddress?: string;
   guardianRelationship?: string;
   photoUrl?: string;
+  passportUrl?: string;
   status?: "COMPLETED" | "SUSPENDED";
   attendanceStatus?: "PRESENT" | "ABSENT";
   lastAttendanceUpdate?: string;
